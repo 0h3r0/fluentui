@@ -120,7 +120,7 @@ jobs:
 
     steps:
       - task: ManualValidation@0
-        timeoutInMinutes: 1440 # task times out in 1 day
+        timeoutInMinutes: 10 # task times out in 10 min
         displayName: Manual Validation
         inputs:
           notifyUsers: $(approvers)
