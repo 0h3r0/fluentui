@@ -74,7 +74,7 @@ jobs:
         inputs:
           versionSpec: 12.x
 
-      - task: YarnInstaller@2
+      - task: YarnInstaller@0
         displayName: Use Yarn 1.19.x
         inputs:
           versionSpec: 1.19.x
@@ -157,7 +157,7 @@ jobs:
         inputs:
           versionSpec: 12.x
 
-      - task: YarnInstaller@2
+      - task: YarnInstaller@0
         displayName: Use Yarn 1.19.x
         inputs:
           versionSpec: 1.19.x
@@ -263,7 +263,7 @@ jobs:
         inputs:
           versionSpec: 12.x
 
-      - task: YarnInstaller@2
+      - task: YarnInstaller@0
         displayName: Use Yarn 1.19.x
         inputs:
           versionSpec: 1.19.x
