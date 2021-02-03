@@ -51,6 +51,24 @@ jobs:
               fi
             fi
 
+      - task: CmdLine@2
+        displayName: Authenticate Git credentials
+        inputs:
+          script: >-
+            git config user.name "Fluent UI Build"
+
+            git config user.email "fluentui-internal@service.microsoft.com"
+
+            git remote set-url origin https://$(githubUser):$(githubPAT)@github.com/microsoft/fluentui.git
+
+      - task: CmdLine@2
+        displayName: Checkout branch
+        inputs:
+          script: >-
+            git checkout $(Build.SourceBranchName)
+
+            git pull
+
       - task: NodeTool@0
         displayName: Install Node.js
         inputs:
@@ -68,7 +86,7 @@ jobs:
           filePath: yarn-ci.sh
 
       - task: CmdLine@2
-        displayName: Display new version copy
+        displayName: Display new version
         inputs:
           script: >-
             if [[ "$(tag)" == "latest" ]]
@@ -92,7 +110,8 @@ jobs:
             printf 'n\n' | eval "$RELEASE_COMMAND"
 
   - job: Job_4
-    displayName: Agentless job
+    displayName: Manual Approval
+    dependsOn: Job_3
     pool: server
 
     steps:
@@ -105,6 +124,9 @@ jobs:
 
   - job: Job_1
     displayName: Build and Release
+    dependsOn:
+      - Job_3
+      - Job_4
     condition: eq(variables.publishToNPM, true)
     pool:
       name: Self Host Ubuntu
@@ -215,7 +237,10 @@ jobs:
 
   - job: Job_2
     displayName: Publish Docsite
-    dependsOn: Job_1
+    dependsOn:
+      - Job_1
+      - Job_3
+      - Job_4
     condition: or(succeeded(), eq(variables.publishDocsite, true))
     pool:
       name: Self Host Ubuntu
@@ -224,7 +249,7 @@ jobs:
       - checkout: self
 
       - task: CmdLine@2
-        displayName: Authenticate Git credentials copy
+        displayName: Authenticate Git credentials
         inputs:
           script: >-
             git config user.name "Fluent UI Build"
