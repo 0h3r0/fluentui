@@ -163,13 +163,16 @@ function fluentuiUpdateChangelog(bumpType) {
 export function fluentuiPostPublishValidation() {
   return function() {
     const gitRoot = findGitRoot();
-    execCommandSync(gitRoot, 'git', ['reset', '--hard']); // sometimes lerna add gitHead in package.json after release
+
+    const branch = execCommandSync(gitRoot, 'git', ['branch', '--show-current']);
+    execCommandSync(gitRoot, 'git', ['fetch', 'origin']);
+    execCommandSync(gitRoot, 'git', ['reset', '--hard', `origin/${branch}`]); // sometimes lerna add gitHead in package.json after release
 
     // sync fluent version
     execCommandSync(gitRoot, 'yarn', ['syncpack:fix']);
     const gitStatus = execCommandSync(gitRoot, 'git', ['status']);
     if (!gitStatus.includes('nothing to commit, working tree clean')) {
-      execCommandSync(gitRoot, 'git', ['add', '.']);
+      execCommandSync(gitRoot, 'git', ['add', `\*package.json`]);
       execCommandSync(gitRoot, 'git', ['commit', '-m', `"chore: fix dependencies after react-northstar release"`]);
       execCommandSync(gitRoot, 'git', ['push']);
     }
