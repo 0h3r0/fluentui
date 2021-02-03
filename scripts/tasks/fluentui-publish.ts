@@ -89,7 +89,7 @@ const execCommandSync = (cwd, command, args) => {
   return result.stdout;
 };
 
-async function fluentuiUpdateChangelog(bumpType) {
+function fluentuiUpdateChangelog(bumpType) {
   const gitRoot = findGitRoot();
 
   const updateChangelog = newVersion => {
@@ -112,7 +112,7 @@ async function fluentuiUpdateChangelog(bumpType) {
         }
 
         if (line.startsWith('## [v')) {
-          prevVersion = line.match(/## \[v(\d*\.\d*\.\d*)\]/)[1];
+          prevVersion = line.match(/## \[v(\d*\.\d*\.\d*.*)\]/)[1];
           newChglog.splice(
             startLineNumForNewVersion,
             0,
