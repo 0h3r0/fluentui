@@ -7,9 +7,9 @@ resources:
 variables:
   - group: 'Github and NPM secrets'
   - name: version
-    value: minor
+    value: 0.52.1-beta.1
   - name: tag
-    value: latest
+    value: beta
   - name: docsiteVersion
     value: empty
   - name: deployBasePath
