@@ -115,15 +115,7 @@ function fluentuiUpdateChangelog(bumpType) {
           prevVersion = line.match(/## \[v(\d*\.\d*\.\d*.*)\]/)[1];
           newChglog.splice(
             startLineNumForNewVersion,
-            0,
-            ``,
-            `### BREAKING CHANGES`,
-            `### Fixes`,
-            `### Features`,
-            `### Performance`,
-            `### Documentation`,
-            `### Deprecations`,
-            ``,
+            1, // remove '## [Unreleased]'
             `<!--------------------------------[ v${newVersion} ]------------------------------- -->`,
             `## [v${newVersion}](https://github.com/microsoft/fluentui/tree/@fluentui/react-northstar_v${newVersion}) (${
               new Date().toISOString().split('T')[0]
