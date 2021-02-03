@@ -27,7 +27,7 @@ variables:
     value: true
 
 jobs:
-  - job: Job_3
+  - job: Job_1
     displayName: Validation
     pool:
       name: Self Host Ubuntu
@@ -109,9 +109,9 @@ jobs:
 
             printf 'n\n' | eval "$RELEASE_COMMAND"
 
-  - job: Job_4
+  - job: Job_2
     displayName: Manual Approval
-    dependsOn: Job_3
+    dependsOn: Job_1
     pool: server
 
     steps:
@@ -122,11 +122,11 @@ jobs:
           notifyUsers: $(approver)
           instructions: Please validate the version in the previous job
 
-  - job: Job_1
+  - job: Job_3
     displayName: Build and Release
     dependsOn:
-      - Job_3
-      - Job_4
+      - Job_1
+      - Job_2
     condition: eq(variables.publishToNPM, true)
     pool:
       name: Self Host Ubuntu
@@ -235,12 +235,12 @@ jobs:
         inputs:
           script: yarn release:fluentui:post-validation
 
-  - job: Job_2
+  - job: Job_4
     displayName: Publish Docsite
     dependsOn:
       - Job_1
+      - Job_2
       - Job_3
-      - Job_4
     condition: or(succeeded(), eq(variables.publishDocsite, true))
     pool:
       name: Self Host Ubuntu
