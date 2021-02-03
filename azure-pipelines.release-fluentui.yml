@@ -127,7 +127,7 @@ jobs:
     dependsOn:
       - Job_1
       - Job_2
-    condition: eq(variables.publishToNPM, true)
+    condition: and(succeeded(), eq(variables.publishToNPM, true))
     pool:
       name: Self Host Ubuntu
 
