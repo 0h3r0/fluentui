@@ -4,6 +4,7 @@ resources:
       type: git
       ref: master
 
+# TODO move configurable variables to pipeline var
 variables:
   - group: 'Github and NPM secrets'
   - name: version
