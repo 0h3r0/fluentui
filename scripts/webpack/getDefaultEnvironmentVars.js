@@ -20,7 +20,7 @@ const getVariables = options => {
 
     variables[key] = JSON.stringify(envValue !== undefined ? envValue : options[key]);
   }
-
+  console.log('output of getVariables', getVariables);
   return variables;
 };
 
