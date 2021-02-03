@@ -24,7 +24,7 @@ variables:
     value: |
       yuanboxue@microsoft.com
   - name: dryRun # stop before publish
-    value: false
+    value: true
 
 jobs:
   - job: Job_3
