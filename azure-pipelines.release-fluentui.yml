@@ -1,3 +1,6 @@
+pr: none
+trigger: none
+
 resources:
   repositories:
     - repository: self
